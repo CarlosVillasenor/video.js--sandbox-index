@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Video.js Sandbox - Spatial Navigation</title>
+
+  <!-- VideoJS Scripts -->
+  <link href="../dist/video-js.css" rel="stylesheet" type="text/css">
+  <script src="../dist/video.js"></script>
+
+  <!-- React Scripts -->
+  <!-- This is what supports JSX compilation (and other transformations) -->
+  <script src="https://unpkg.com/@babel/standalone@7.10.3/babel.min.js"></script>
+
+  <!-- React CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+
+  <!-- Your code that needs compiling goes in a type="text/babel" `script` tag -->
+  <script type="text/babel" data-presets="react,stage-3">
+    const Example = () => {
+      return <button className="react-button">React Button</button>;
+    };
+
+    ReactDOM.render(<Example />, document.getElementById("react-root"));
+  </script>
+
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+    }
+
+    *:focus {
+      background-color: yellow;
+      outline: 2px solid crimson;
+      color: crimson;
+    }
+
+    .focusable {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border: 2px solid #ccc;
+    }
+
+    /* Sample grid, to test spatial navigation */
+
+    .container {
+      margin: 12px 0px;
+      display: grid;
+      grid-template-columns: repeat(2, 100px);
+      /* It needs to be a gap between elements otherwise
+      spatial navigation will not work properly */
+      gap: 5px;
+    }
+
+    .lower-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .second-container {
+      display: flex;
+      margin-top: 12px;
+      gap: 5px;
+    }
+
+    /* Video */
+
+    .vjs-audio-only-mode .vjs-control-bar,
+    .vjs-has-started .vjs-control-bar {
+      gap: 1px;
+    }
+
+    /* React */
+    .react-button {
+      margin-top: 10px;
+      margin-left: 8px;
+      width: 300px;
+      background-color: aqua;
+    }
+  </style>
+</head>
+
+<body>
+  <video-js id="vid1" class="video-js" controls preload="auto" width="640" height="480">
+    <source src="https://d2zihajmogu5jn.cloudfront.net/elephantsdream/hls/ed_hd.m3u8" type="application/x-mpegURL" />
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a
+        href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video-js>
+
+  <script>
+    var vid = document.getElementById('vid1');
+    var playerTest = videojs('vid1', {
+      controlBar: {
+        volumePanel: true,
+        pictureInPictureToggle: true,
+      },
+      spatialNavigation: {
+        enabled: true,
+        horizontalSeek: false,
+        enableKeydownListener: true
+      }
+    });
+    playerTest.ready(function () {
+      SpatialNavigation.start();
+    });
+    playerTest.log('window.player created', playerTest);
+  </script>
+
+  <div id="react-root"></div>
+
+  <div class="container">
+    <div class="focusable" tabindex="0">1</div>
+    <div class="focusable" tabindex="0">2</div>
+    <div class="focusable" tabindex="0">3</div>
+    <div class="focusable" tabindex="0">4</div>
+  </div>
+</body>
+</html>
