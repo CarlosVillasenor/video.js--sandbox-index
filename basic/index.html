@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Video.js Sandbox - Spatial Navigation</title>
+
+    <!-- VideoJS Scripts -->
+    <link href="../dist/video-js.css" rel="stylesheet" type="text/css">
+    <script src="../dist/video.js"></script>
+
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+        }
+
+        *:focus {
+            background-color: yellow;
+            outline: 2px solid crimson;
+            color: crimson;
+        }
+
+        .focusable {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <video-js id="vid1" class="video-js" controls preload="auto" width="640" height="480">
+        <source src="https://d2zihajmogu5jn.cloudfront.net/elephantsdream/hls/ed_hd.m3u8"
+            type="application/x-mpegURL" />
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+    </video-js>
+
+    <script>
+        var vid = document.getElementById('vid1');
+
+        var playerTest = videojs('vid1', {
+            controlBar: {
+                volumePanel: true,
+                pictureInPictureToggle: true,
+            },
+            spatialNavigation: {
+                enabled: true,
+                horizontalSeek: false,
+                enableKeydownListener: true
+            }
+        });
+
+        playerTest.ready(function () {
+            playerTest.spatialNavigation.start();
+
+            playerTest.spatialNavigation.focus(playerTest.spatialNavigation.updateFocusableComponents()[0]);
+        });
+
+        playerTest.log('window.player created', playerTest);
+    </script>
+</body>
+
+</html>
