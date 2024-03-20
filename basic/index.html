@@ -44,7 +44,7 @@
     <script>
         var vid = document.getElementById('vid1');
 
-        var playerTest = videojs('vid1', {
+        var player = videojs('vid1', {
             controlBar: {
                 volumePanel: true,
                 pictureInPictureToggle: true,
@@ -56,13 +56,13 @@
             }
         });
 
-        playerTest.ready(function () {
-            playerTest.spatialNavigation.start();
+        player.ready(function () {
+            player.spatialNavigation.start();
 
-            playerTest.spatialNavigation.focus(playerTest.spatialNavigation.updateFocusableComponents()[0]);
+            player.spatialNavigation.focus(player.spatialNavigation.updateFocusableComponents()[0]);
         });
 
-        playerTest.log('window.player created', playerTest);
+        player.log('window.player created', player);
     </script>
 </body>
 
